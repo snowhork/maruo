@@ -2,13 +2,7 @@
 using System.Collections;
 
 public class Item : RightRayReciever {
-    public Rigidbody Rigidbody
-    {
-        get
-        {
-            return gameObject.GetComponent<Rigidbody>();
-        }
-    }
+    public Rigidbody Rigidbody => gameObject.GetComponent<Rigidbody>();
 
     void Start()
     {
@@ -23,12 +17,12 @@ public class Item : RightRayReciever {
 		controller.State = RightControllerState.DrawState.Instance;
     }
 
-    public override void Holding(RightViveController controller)
+    public void Holding(RightViveController controller)
     {
 		PositionHolding(controller.transform.position);
     }
 
-	public override void Drawing(RightViveController controller)
+	public void Drawing(RightViveController controller)
 	{
 		PositionTracking(controller.transform.position);
 		if (Vector3.Distance (transform.position, controller.transform.position) <= 0.01f) {
@@ -37,7 +31,7 @@ public class Item : RightRayReciever {
 		}
 	}
 
-    public override void Release(RightViveController controller)
+    public void Release(RightViveController controller)
     {
         Rigidbody.isKinematic = false;
         Rigidbody.AddForce(controller.Velocity * 300f);

@@ -10,19 +10,4 @@ public class RightRayReciever : RayReciever {
     {
 
     }
-
-    public virtual void Holding(RightViveController controller)
-    {
-
-    }
-
-	public virtual void Drawing(RightViveController controller)
-	{
-
-	}
-
-    public virtual void Release(RightViveController controller)
-    {
-
-    }
 }

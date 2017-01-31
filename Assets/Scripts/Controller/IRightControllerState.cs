@@ -1,53 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IRightControllerState {
-    void BeforeUpdateAction(RightViveController controller);
-    void PressDownAction(RightViveController controller);
-    void PressUpAction(RightViveController controller);
-}
-
-public class Singleton<T> where T : new()
+public interface IRightControllerState
 {
-    private static T _instance = new T();
-    public static T Instance { get { return _instance; } }
+    void PressDownAction(RightViveController controller);
+    void BeforeUpdateAction(RightViveController controller);
+    void PressUpAction(RightViveController controller);
 }
 
 namespace RightControllerState
 {
-    public class FreeState : Singleton<FreeState>, IRightControllerState
+    public abstract class RightControllerStateSingleton<T> : IRightControllerState where T : new()
     {
-        public void PressDownAction(RightViveController controller)
-        {
-            if (controller.Reciever == null)
-            {
-                return;
-            }
-            controller.Reciever.Select(controller);
-        }
-
-        public void BeforeUpdateAction(RightViveController controller)
+        public static T Instance { get; } = new T();
+        public virtual void PressDownAction(RightViveController controller)
         {
 
         }
-        public void PressUpAction(RightViveController controller)
+
+        public virtual void BeforeUpdateAction(RightViveController controller)
         {
-            return;
+
+        }
+        public virtual void PressUpAction(RightViveController controller)
+        {
+
         }
     }
 
-	public class DrawState : Singleton<DrawState>, IRightControllerState
-	{
-		public void PressDownAction(RightViveController controller)
-		{
-			
-		}
+    public class FreeState : RightControllerStateSingleton<FreeState>
+    {
+        public override void PressDownAction(RightViveController controller)
+        {
+            controller.Reciever?.Select(controller);
+        }
+    }
 
-		public void BeforeUpdateAction(RightViveController controller)
+	public class DrawState : RightControllerStateSingleton<DrawState>
+	{
+		public override void BeforeUpdateAction(RightViveController controller)
 		{
 			controller.HoldItem.Drawing(controller);
 		}
-		public void PressUpAction(RightViveController controller)
+		public override void PressUpAction(RightViveController controller)
 		{
 			controller.HoldItem.Release(controller);
 			controller.State = FreeState.Instance;
@@ -55,18 +50,14 @@ namespace RightControllerState
 		}
 	}
 
-    public class HoldState : Singleton<HoldState>, IRightControllerState
+    public class HoldState : RightControllerStateSingleton<HoldState>
     {
-        public void BeforeUpdateAction(RightViveController controller)
+        public override void BeforeUpdateAction(RightViveController controller)
         {
             controller.HoldItem.Holding(controller);
         }
-        public void PressDownAction(RightViveController controller)
-        {
-            return;
-        }
 
-        public void PressUpAction(RightViveController controller)
+        public override void PressUpAction(RightViveController controller)
         {
             controller.HoldItem.Release(controller);
             controller.State = FreeState.Instance;
