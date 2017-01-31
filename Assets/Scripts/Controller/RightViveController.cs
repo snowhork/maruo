@@ -4,7 +4,7 @@ using System.Collections;
 public class RightViveController : ViveController {
     public Item HoldItem { get; set; }
     public IRightControllerState State { get; set; }
-    new public RightRayReciever Reciever { get
+    public new RightRayReciever Reciever { get
         {
             if (base.Reciever == null)
             {

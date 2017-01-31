@@ -22,6 +22,7 @@ namespace RightControllerState
         {
 
         }
+
         public virtual void PressUpAction(RightViveController controller)
         {
 
@@ -36,27 +37,8 @@ namespace RightControllerState
         }
     }
 
-	public class DrawState : RightControllerStateSingleton<DrawState>
-	{
-		public override void BeforeUpdateAction(RightViveController controller)
-		{
-			controller.HoldItem.Drawing(controller);
-		}
-		public override void PressUpAction(RightViveController controller)
-		{
-			controller.HoldItem.Release(controller);
-			controller.State = FreeState.Instance;
-			controller.HoldItem = null;
-		}
-	}
-
     public class HoldState : RightControllerStateSingleton<HoldState>
     {
-        public override void BeforeUpdateAction(RightViveController controller)
-        {
-            controller.HoldItem.Holding(controller);
-        }
-
         public override void PressUpAction(RightViveController controller)
         {
             controller.HoldItem.Release(controller);
