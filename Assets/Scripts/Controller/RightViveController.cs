@@ -31,6 +31,5 @@ public class RightViveController : ViveController {
         {
             State.PressUpAction(this);
         }
-        State.UpdateAction(this);
     }
 }

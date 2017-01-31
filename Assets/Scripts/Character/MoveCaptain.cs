@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoveCaptain : MonoBehaviour {
     public Transform target;
-    NavMeshAgent captain;
+    UnityEngine.AI.NavMeshAgent captain;
 
     //public GameObject target;
     //NavMeshAgent captain;
@@ -12,7 +12,7 @@ public class MoveCaptain : MonoBehaviour {
     //Vector3 start;
     // Use this for initialization
     void Start () {
-        captain = GetComponent<NavMeshAgent>();
+        captain = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
 
         //start = transform.position;

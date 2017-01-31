@@ -2,7 +2,6 @@
 using System.Collections;
 
 public interface IRightControllerState {
-    void UpdateAction(RightViveController controller);
     void BeforeUpdateAction(RightViveController controller);
     void PressDownAction(RightViveController controller);
     void PressUpAction(RightViveController controller);
@@ -35,12 +34,26 @@ namespace RightControllerState
         {
             return;
         }
-
-        public void UpdateAction(RightViveController controller)
-        {
-            return;
-        }
     }
+
+	public class DrawState : Singleton<DrawState>, IRightControllerState
+	{
+		public void PressDownAction(RightViveController controller)
+		{
+			
+		}
+
+		public void BeforeUpdateAction(RightViveController controller)
+		{
+			controller.HoldItem.Drawing(controller);
+		}
+		public void PressUpAction(RightViveController controller)
+		{
+			controller.HoldItem.Release(controller);
+			controller.State = FreeState.Instance;
+			controller.HoldItem = null;
+		}
+	}
 
     public class HoldState : Singleton<HoldState>, IRightControllerState
     {
@@ -58,10 +71,6 @@ namespace RightControllerState
             controller.HoldItem.Release(controller);
             controller.State = FreeState.Instance;
             controller.HoldItem = null;
-        }
-        public void UpdateAction(RightViveController controller)
-        {
-            
         }
     }
 }
