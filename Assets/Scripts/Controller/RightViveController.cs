@@ -11,7 +11,8 @@ public class RightViveController : ViveController {
                 return null;
             }
             return base.Reciever.GetComponent(typeof(RightRayReciever)) as RightRayReciever;
-        } }
+        }
+    }
 
 	protected override void Start () {
         base.Start();
